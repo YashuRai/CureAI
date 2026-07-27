@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { MessageCircle, LayoutDashboard, Home } from 'lucide-react';
+import { MessageCircle, LayoutDashboard, Home, Users } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
@@ -11,6 +11,7 @@ const Navbar = () => {
   const navItems = [
     { label: 'Home', href: '/', icon: Home },
     { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { label: 'Health Twin', href: '/health-twin', icon: Users },
     { label: 'Chat', href: '/chat', icon: MessageCircle },
   ];
 
@@ -30,7 +31,7 @@ const Navbar = () => {
           >
             <Link href="/" className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-300 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">💚</span>
+                <span className="text-white font-bold text-lg">❤️</span>
               </div>
               <span className="font-bold text-xl gradient-text">CureAI</span>
             </Link>
