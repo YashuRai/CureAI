@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { MessageCircle, LayoutDashboard, Home, Users } from 'lucide-react';
+import { MessageCircle, LayoutDashboard, Home, Users, Brain } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
@@ -12,6 +12,7 @@ const Navbar = () => {
     { label: 'Home', href: '/', icon: Home },
     { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { label: 'Health Twin', href: '/health-twin', icon: Users },
+    { label: 'AI Analysis', href: '/ai-analysis', icon: Brain },
     { label: 'Chat', href: '/chat', icon: MessageCircle },
   ];
 
@@ -38,7 +39,7 @@ const Navbar = () => {
           </motion.div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {navItems.map((item, index) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -53,7 +54,7 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className={`flex items-center gap-2 font-medium transition-colors ${
+                    className={`flex items-center gap-2 font-medium transition-colors text-sm ${
                       isActive ? 'text-primary-500' : 'text-neutral-600 hover:text-primary-500'
                     }`}
                   >
