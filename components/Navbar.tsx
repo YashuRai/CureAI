@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { MessageCircle, LayoutDashboard, Home, Users, Brain } from 'lucide-react';
+import { MessageCircle, LayoutDashboard, Home, Users, Brain, Zap } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
@@ -39,7 +39,7 @@ const Navbar = () => {
           </motion.div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-6">
             {navItems.map((item, index) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
