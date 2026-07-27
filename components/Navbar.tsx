@@ -1,14 +1,18 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
-import PremiumButton from './PremiumButton';
+import Link from 'next/link';
+import { MessageCircle, LayoutDashboard, Home } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
-  const navItems = ['Features', 'Dashboard', 'Pricing', 'About'];
+  const navItems = [
+    { label: 'Home', href: '/', icon: Home },
+    { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { label: 'Chat', href: '/chat', icon: MessageCircle },
+  ];
 
   return (
     <motion.nav
@@ -24,65 +28,57 @@ const Navbar = () => {
             whileHover={{ scale: 1.05 }}
             className="flex items-center gap-2"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-300 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">₹</span>
-            </div>
-            <span className="font-bold text-xl gradient-text">CureAI</span>
+            <Link href="/" className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-300 flex items-center justify-center">
+                <span className="text-white font-bold text-lg">💚</span>
+              </div>
+              <span className="font-bold text-xl gradient-text">CureAI</span>
+            </Link>
           </motion.div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item, index) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="text-neutral-600 hover:text-primary-500 font-medium transition-colors"
-              >
-                {item}
-              </motion.a>
-            ))}
+            {navItems.map((item, index) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="relative"
+                >
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className={`flex items-center gap-2 font-medium transition-colors ${
+                      isActive ? 'text-primary-500' : 'text-neutral-600 hover:text-primary-500'
+                    }`}
+                  >
+                    <Icon size={18} />
+                    {item.label}
+                  </motion.div>
+                  {isActive && (
+                    <motion.div
+                      layoutId="underline"
+                      className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-300 rounded-full"
+                    />
+                  )}
+                </Link>
+              );
+            })}
           </div>
 
-          {/* CTA Buttons */}
-          <div className="hidden md:flex items-center gap-4">
-            <button className="text-neutral-600 hover:text-primary-500 font-medium transition-colors">
-              Sign In
-            </button>
-            <PremiumButton>Get Started</PremiumButton>
-          </div>
-
-          {/* Mobile Menu Button */}
+          {/* CTA Button */}
           <motion.button
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2"
+            className="hidden md:block px-6 py-2 rounded-lg bg-gradient-to-r from-primary-500 to-secondary-300 text-white font-medium hover:shadow-lg transition-all"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            Get Started
           </motion.button>
         </div>
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="md:hidden pb-4"
-          >
-            {navItems.map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="block py-2 text-neutral-600 hover:text-primary-500"
-              >
-                {item}
-              </a>
-            ))}
-          </motion.div>
-        )}
       </div>
     </motion.nav>
   );
